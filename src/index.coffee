@@ -1,56 +1,28 @@
-FS = require 'fs'
+#!/usr/bin/env coffee
+require 'log-a-log'
 
+_ = require 'lodash'
 Q = require 'q'
-parser = require 'raml-parser'
-objToRaml = require 'raml-object-to-raml'
 
-openWriteStream = (outFile) ->
-  deferred = Q.defer()
-  try
-    deferred.resolve FS.createWriteStream(outFile)
-  catch error
-    deferred.reject error
-  deferred.promise
+FS = require 'fs'
+dgram = require 'dgram'
 
-parseRaml = (inFile) ->
-  deferred = Q.defer()
-  try
-    parser.loadFile inFile
-      .then ((data) -> deferred.resolve(data)), ((error) -> deferred.reject(error))
-  catch error
-    deferred.reject error
-  deferred.promise
+port = 13579
 
-serializeRaml = (ramlObj) ->
-  deferred = Q.defer()
-  try
-    deferred.resolve objToRaml(ramlObj)
-  catch error
-    deferred.reject error
-  deferred.promise
-  
-writeRaml = (serialized, outFile) ->
-  deferred = Q.defer()
-  try
-    FS.writeFile outFile, serialized, (error) ->
-      if err?
-        deferred.reject(error)
-      else
-        deferred.resolve(outFile)
-  catch error
-    deferred.reject(error)
-  deferred.promise
+sock = dgram.createSocket 'udp4'
+#sock.bind port, ->
+#  console.log "Binding port..."
 
-ramlAsString = (inFile) ->
-  parseRaml inFile
-  .then (data) -> serializeRaml(data)
+sock.on 'listening', ->
+  console.log "Listening on #{sock.family} #{sock.address}:#{sock.port}"
 
-flattenRamlDoc = (inFile, outFile) ->
-  ramlAsString inFile
-  .then (serialized) -> writeRaml(serialized, outFile)
-  
-module.exports = {
-  flatten : flattenRamlDoc,
-  asString : ramlAsString
-}
+sock.on 'close', ->
+  console.log "Socket closed."
 
+sock.on 'error', (error) ->
+  console.log "Error: #{error}\n#{error.stack}"
+
+sock.on 'message', (message, client) ->
+  console.log "received message from #{client.address}:#{client.port} : #{message}"
+
+sock.bind port

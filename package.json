@@ -21,16 +21,18 @@
     "lib": "./lib"
   },
   "dependencies": {
-    "lodash": "~3",
-    "q": "~1.4"
+    "lodash": "*",
+    "log-a-log": "*",
+    "q": "*"
   },
   "devDependencies": {
-    "coffee-script": "~1.9",
-    "mocha": "~2.2"
+    "coffee-script": "*",
+    "mocha": "*"
   },
   "scripts": {
+    "start": "coffee src/index.coffee",
     "build": "cake build",
-    "test": "cake test"
+    "test": "coffee test/ip.coffee"
   },
   "engines": {
     "node": ">=0.10"

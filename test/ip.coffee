@@ -3,7 +3,7 @@
 _ = require 'lodash'
 os = require 'os'
 
-external = []
+dgram = require 'dgram'
 
 console.log "everything:\n", os.networkInterfaces()
 
@@ -28,4 +28,17 @@ _(os.networkInterfaces())
 .value()
 
 console.log "hostname:", os.hostname()
+
+sock = dgram.createSocket 'udp4'
+
+message =
+  host: os.hostname()
+json = JSON.stringify message, null, 2
+
+sock.send json, 0, json.length, 13579, '127.0.0.1', (error) ->
+  if error?
+    console.error "Error: #{error}\n#{error.stack}"
+  else
+    console.log "Message written."
+  sock.close()
 
