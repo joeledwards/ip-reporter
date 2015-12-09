@@ -14,7 +14,8 @@ sock = dgram.createSocket 'udp4'
 #  console.log "Binding port..."
 
 sock.on 'listening', ->
-  console.log "Listening on #{sock.family} #{sock.address}:#{sock.port}"
+  address = sock.address()
+  console.log "Listening on #{address.family} #{address.address}:#{address.port}"
 
 sock.on 'close', ->
   console.log "Socket closed."
@@ -26,3 +27,4 @@ sock.on 'message', (message, client) ->
   console.log "received message from #{client.address}:#{client.port} : #{message}"
 
 sock.bind port
+

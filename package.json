@@ -30,9 +30,9 @@
     "mocha": "*"
   },
   "scripts": {
-    "start": "coffee src/index.coffee",
+    "start": "coffee ./src/index.coffee",
     "build": "cake build",
-    "test": "coffee test/ip.coffee"
+    "test": "coffee ./test/ip.coffee"
   },
   "engines": {
     "node": ">=0.10"
