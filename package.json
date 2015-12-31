@@ -21,20 +21,25 @@
     "lib": "./lib"
   },
   "dependencies": {
+    "body-parser": "*",
+    "express": "*",
+    "ioredis": "*",
     "lodash": "*",
     "log-a-log": "*",
-    "q": "*"
+    "q": "*",
+    "request": "*",
+    "uuid": "*"
   },
   "devDependencies": {
     "coffee-script": "*",
     "mocha": "*"
   },
   "scripts": {
-    "start": "coffee ./src/index.coffee",
+    "start": "node ./src/index.js",
     "build": "cake build",
-    "test": "coffee ./test/ip.coffee"
+    "test": "node ./test/ip.js"
   },
   "engines": {
-    "node": ">=0.10"
+    "node": ">=5.0"
   }
 }
