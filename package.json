@@ -17,18 +17,21 @@
     "url": "https://github.com/joeledwards/ip-reporter.git"
   },
   "main": "./lib/index",
-  "directories" : {
+  "directories": {
     "lib": "./lib"
   },
   "dependencies": {
     "body-parser": "*",
     "express": "*",
     "ioredis": "*",
+    "leveldown": "^1.4.6",
+    "levelup": "^1.3.2",
     "lodash": "*",
     "log-a-log": "*",
+    "needle": "^1.0.0",
     "q": "*",
-    "request": "*",
-    "uuid": "*"
+    "uuid": "*",
+    "winston": "^2.2.0"
   },
   "devDependencies": {
     "coffee-script": "*",
