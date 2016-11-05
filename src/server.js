@@ -1,7 +1,7 @@
 require('log-a-log');
 
 const _ = require('lodash');
-const Q = require('q');
+const P = require('bluebird');
 const uuid = require('uuid');
 const Redis = require('ioredis');
 const crypto = require('crypto');

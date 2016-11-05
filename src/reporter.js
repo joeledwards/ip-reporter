@@ -1,7 +1,7 @@
 require('log-a-log');
 
 const _ = require('lodash');
-const Q = require('q');
+const P = require('bluebird');
 const uuid = require('uuid');
 const crypto = require('crypto');
 const logger = require('winston');
@@ -10,12 +10,12 @@ const levelup = require('levelup');
 
 // Fetch our gateway IP from an IP reporter service.
 function getPublicIp() {
-  Q({});
+  P.resolve({});
 }
 
 // Fetch all local interface info.
 function getInterfaces() {
-  Q({});
+  P.resolve({});
 }
 
 // Run the network check.
