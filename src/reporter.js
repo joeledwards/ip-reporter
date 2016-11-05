@@ -10,20 +10,22 @@ const levelup = require('levelup');
 
 // Fetch our gateway IP from an IP reporter service.
 function getPublicIp() {
-  P.resolve({});
+  return P.promisify(needle.get)('http://api.ipify.org?format=json')
+  .then(response => response.body)
+  .then(({ip}) => ip);
 }
 
 // Fetch all local interface info.
 function getInterfaces() {
-  P.resolve({});
+  return P.resolve({});
 }
 
 // Run the network check.
 function checkNetwork() {
   getPublicIp()
 
-  .then((ip) => {
-    return getInterfaces().then((interfaces) => {
+  .then(ip => {
+    return getInterfaces().then(interfaces => {
       return {
         interfaces: interfaces,
         public_ip: ip,
@@ -31,17 +33,22 @@ function checkNetwork() {
     });
   })
 
-  .then((info) => {
+  .then(info => {
     // TODO:
     // - check with database
     // - report to IP service
   })
 
-  .catch(error) => {
+  .catch(error => {
     logger.error('Error fetching networking info:', error);
   })
 
-  .fin(() => setTimeout(checkNetwork, 60000));
+  .finally(() => setTimeout(checkNetwork, 60000));
 }
 
+module.exports = {
+  checkNetwork,
+  getPublicIp,
+  getInterfaces,
+};
 
