@@ -2,6 +2,7 @@ require('log-a-log');
 
 const _ = require('lodash');
 const P = require('bluebird');
+const os = require('os');
 const uuid = require('uuid');
 const crypto = require('crypto');
 const logger = require('winston');
@@ -17,7 +18,7 @@ function getPublicIp() {
 
 // Fetch all local interface info.
 function getInterfaces() {
-  return P.resolve({});
+  return P.resolve(os.networkInterfaces());
 }
 
 // Run the network check.
